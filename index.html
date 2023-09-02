@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Supplemental Information on running NAMD exercise on local machines</title>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Supplemental Information on running NAMD exercise on local machines</h1>
+    <p>
+        On this webpage, the required information for running the exercise described in
+        "A Computer Laboratory for the Calculation of the Heat Capacity of a Peptide Unfolding Transition" will be on
+        the local machines without the use of the VIKING platform.
+    </p>
+
+    <h2>Contents</h2>
+    <a href="#getting_namd">Getting NAMD</a><br>
+    <a href="#running_namd">Running NAMD</a><br>
+    <a href="#processing">Processing the results</a>
+
+    <h2 id="getting_namd">Getting NAMD</h2>
+    <p>
+        NAMD can be downloaded for free from <a
+            href="https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=NAMD" target="_blank">here</a>.
+        However, a free account is required.
+        A different version of NAMD must be used, depending on the operating system of the machine being used to run the
+        simulation.
+        Below are our recommendations for which versions to download for running the described exercise (as of writing).
+    </p>
+    <h3>Windows</h3>
+    <p>
+        For machines running Windows, we recommend downloading the "Win64" binaries under "Version 2.14" from the NAMD
+        Download page,
+        or by clicking <a
+            href="https://www.ks.uiuc.edu/Development/Download/download.cgi?UserID=&AccessCode=&ArchiveID=1573"
+            target="_black">here</a>.
+    </p>
+    <p>
+        The binaries will come compressed in a ZIP archive, which must be extracted.
+        We recommend creating a new folder for this exercise, and extracting all the NAMD files into the folder.
+    </p>
+    <h3>macOS</h3>
+    <p>
+        For machines running macOS, we recommend downloading the "MacOSX-x86_64" binaries under "Version 2.14" from the
+        NAMD Download page,
+        or by clicking <a
+            href="https://www.ks.uiuc.edu/Development/Download/download.cgi?UserID=&AccessCode=&ArchiveID=1628"
+            target="_black">here</a>.
+    </p>
+    <p>
+        Although these binaries have been compiled for the x86-64 instruction set. They should run out of the box on
+        macOS machines with M1, and M2 chips, using the Rosetta 2 translation layer.
+    </p>
+    <p>
+        The binaries will come compressed in a tar gzip archive, which must be extracted.
+        We recommend creating a new folder for this exercise, and extracting all the NAMD files into the folder.
+    </p>
+    <h3>Linux</h3>
+    <p>
+        For machines running Linux, we recommend downloading the "Linux-x86_64-multicore" binaries under "Version 3.0b3"
+        from the NAMD Download page,
+        or by clicking <a
+            href="https://www.ks.uiuc.edu/Development/Download/download.cgi?UserID=&AccessCode=&ArchiveID=1669"
+            target="_black">here</a>.
+    </p>
+    <p>
+        These binaries should run on any major up to date Linux machine. If an older Linux distribution is used, the
+        newest binaries may not run.
+        In this case, it may be possible to use an older version of NAMD.
+    </p>
+    <p>
+        The binaries will come compressed in a tar gzip archive, which must be extracted.
+        We recommend creating a new folder for this exercise, and extracting all the NAMD files into the folder.
+    </p>
+
+    <h2 id="running_namd">Running NAMD</h2>
+    <p>
+        The files required for running the simulation exercise can be downloaded <a href="simulation.zip"
+            target="_blank">here</a>.
+        We recommend extracting the "simulation" folder into the same folder as the NAMD binary, such that the the
+        folder structure is as follows (here shown for Linux):
+    </p>
+    <p class="center">
+        Exercise <br>
+        ├── README.txt <br>
+        ├── announce.txt <br>
+        ├── charmd <br>
+        ├── charmd_faceless <br>
+        ├── charmrun <br>
+        ├── flipbinpdb <br>
+        ├── flipdcd <br>
+        ├── lib <br>
+        ├── license.txt <br>
+        ├── namd3 <br>
+        ├── notes.txt <br>
+        ├── psfgen <br>
+        ├── simulation <br>
+        │   ├── par_alanine_termi.inp <br>
+        │   ├── psfgen.pdb <br>
+        │   ├── psfgen.psf <br>
+        │   ├── stage3 <br>
+        │   │   ├── namd_stage3_1.conf <br>
+        │   │   └── output <br>
+        │   │   └── stage3_1.xst <br>
+        │   └── stage4 <br>
+        │   ├── namd_stage4_1.conf <br>
+        │   └── output <br>
+        │   └── stage4_1.xst <br>
+        └── sortreplicas
+    </p>
+    <p>
+        The download includes various topology files, an input parameter file for the force field as well as two
+        configuration files for the 2 stages
+        of the simulation.
+    </p>
+    <p>
+        Before running the simulation, the temperature of the simulation must be set. This must be done for both stages.
+        To do this, go into the "simulation" folder, then into the "stage3" folder, and open the file named
+        "namd_stage3_1.conf" with a text editor.
+        On the 10th line of this file it should say "set temperature &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &lt;INSERT TEMPERATURE HERE&gt;",
+        here "&lt;INSERT TEMPERATURE HERE&gt"; should be replaced with the temperature. The same should be done for the
+        file named "namd_stage4_1.conf"
+        in the "stage4" folder.
+    </p>
+    <p>
+        It is also possible to change how long the simulations run for by editing the second to last line,
+        which says something along the lines of "set num_steps [ expr 10000000 - $currenttimestep ]" here, one can
+        simply change the number.
+        Note that the number of simulation steps taken in the first stage will also be counted as steps in the second
+        stage.
+    </p>
+    <p>
+        In the following, a way for running NAMD with the simulation files for Windows, macOS and Linux is described.
+    </p>
+    <h3>Windows</h3>
+    <p>
+        To start the first stage of the simulation, open the Command Prompt in the Exercise folder,
+        where the simulation folder and the NAMD binary is located, and run the following command. In which &lt;CORE
+        COUNT&gt;
+        should be replaced by the amount of CPU cores to use for the simulation. For this simulation we recommend using
+        between 4 and 8 cores:
+    </p>
+    <p>
+        namd2.exe simulation/stage3/namd_stage3_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage3/__stage3_1_namd_stdout.log 2&gt; simulation/stage3/__stage3_1_namd_stderr.log
+    </p>
+    <p>
+        Running this command will create two files containing the various outputs from the simulation,
+        as well as any errors encountered during the simulation. When the first stage of the simulation is done running,
+        the second stage can be started by running the following command:
+    </p>
+    <p>
+        namd2.exe simulation/stage4/namd_stage4_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage4/__stage4_1_namd_stdout.log 2&gt; simulation/stage4/__stage4_1_namd_stderr.log
+    </p>
+    <h3>macOS</h3>
+    <p>
+        To start the simulation on a macOS machine, one might first have to make the binary executable. This can be done by navigating to
+        the exercise folder and running the following command in the terminal:
+    </p>
+    <p>
+        chmod 755 namd3
+    </p>
+    <p>
+        The first stage of the simulation can now be started by running the following command in the terminal, Here
+        &lt;CORE COUNT&gt;
+        should be replaced by the amount of CPU cores to use for the simulation. For this simulation we recommend using
+        between 4 and 8 cores:
+    </p>
+    <p>
+        ./namd2 simulation/stage3/namd_stage3_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage3/__stage3_1_namd_stdout.log 2&gt; simulation/stage3/__stage3_1_namd_stderr.log
+    </p>
+    <p>
+        Running this command will create two files containing the various outputs from the simulation,
+        as well as any errors encountered during the simulation. When the first stage of the simulation is done running,
+        the second stage can be started by running the following command:
+    </p>
+    <p>
+        ./namd2 simulation/stage4/namd_stage4_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage4/__stage4_1_namd_stdout.log 2&gt; simulation/stage4/__stage4_1_namd_stderr.log
+    </p>
+    <h3>Linux</h3>
+    <p>
+        To start the simulation on a Linux machine, one might first have to make the binary executable. This can be done by navigating to
+        the exercise folder and running the following command in the terminal:
+    </p>
+    <p>
+        chmod 755 namd2
+    </p>
+    <p>
+        The first stage of the simulation can now be started by running the following command in the terminal, Here
+        &lt;CORE COUNT&gt;
+        should be replaced by the amount of CPU cores to use for the simulation. For this simulation we recommend using
+        between 4 and 8 cores:
+    </p>
+    <p>
+        ./namd3 simulation/stage3/namd_stage3_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage3/__stage3_1_namd_stdout.log 2&gt; simulation/stage3/__stage3_1_namd_stderr.log
+    </p>
+    <p>
+        Running this command will create two files containing the various outputs from the simulation,
+        as well as any errors encountered during the simulation. When the first stage of the simulation is done running,
+        the second stage can be started by running the following command:
+    </p>
+    <p>
+        ./namd3 simulation/stage4/namd_stage4_1.conf +ppn &lt;CORE COUNT&gt; &gt;
+        simulation/stage4/__stage4_1_namd_stdout.log 2&gt; simulation/stage4/__stage4_1_namd_stderr.log
+    </p>
+    <h2 id="processing">Processing the results</h2>
+    <p>
+        To get the mean of the energy and mean of the energy squared, press the button below and load the
+        "simulation/stage4/__stage4_1_namd_stdout.log" file.
+    </p>
+    <input type="file" id="input">
+
+    <footer>
+        <p>
+            Last updated on: 29/8-2023<br>
+            Author: Lau Blom Grøndahl (<a href="mailto:hege@example.com">lag@sdu.dk</a>)<br>
+        </p>
+    </footer>
+
+    <script>
+        "use strict";
+
+        let input = document.getElementById("input");
+
+        input.onchange = e => {
+            let file = e.target.files[0];
+
+            let reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+
+            reader.onload = readerEvent => {
+                let content = readerEvent.target.result;
+
+                let lines = content.split("\n");
+
+                let meanEnergy = 0;
+                let meanEnergySquared = 0;
+                let counter = 0;
+
+                lines.forEach(line => {
+                    let parts = line.replace(/\s+/g, " ").trim().split(" ");
+
+                    if (parts[0] == "ENERGY:") {
+                        meanEnergy += Number(parts[11]);
+                        meanEnergySquared += Number(parts[11]) * Number(parts[11]);
+                        counter++;
+                    }
+                });
+
+                if (counter < 1) {
+                    alert("Invalid file, are you sure you picked the right file?");
+                } else {
+                    alert("Mean of the energy: " + meanEnergy / counter + " kcal/mol, mean of the energy squared: " + meanEnergySquared / counter + " kcal^2/mol^2");
+                }
+
+                input.reset();
+            }
+        }
+
+    </script>
+</body>
+
+</html>
